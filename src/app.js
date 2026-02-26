@@ -17,11 +17,15 @@ app.use(morgan('dev')); // HTTP request logger
 // Swagger Setup
 const swaggerDocument = YAML.load(path.join(__dirname, 'docs', 'swagger.yaml'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Add this import at the top
+const authRoutes = require('./routes/auth.routes');
 
 // Base Health Route
 app.get('/api/v1/health', (req, res) => {
   res.status(200).json({ status: 'success', message: 'Kimelia Liora API is running' });
 });
+
+app.use('/api/v1/auth', authRoutes);
 
 // We will add modular routes here in the next steps...
 
